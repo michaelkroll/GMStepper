@@ -10,12 +10,27 @@ import UIKit
 
 @IBDesignable public class GMStepper: UIControl {
 
+    /// Current label value
+    @objc @IBInspectable public var valueText: String = "" {
+        didSet {
+            let isInteger = floor(value) == value
+            
+            if showIntegerIfDoubleIsInteger && isInteger {
+                label.text = String(stringInterpolationSegment: Int(value)) + " " + valueText
+            } else {
+                label.text = String(stringInterpolationSegment: value) + " " + valueText
+            }
+            
+            sendActions(for: .valueChanged)
+        }
+    }
+    
     /// Current value of the stepper. Defaults to 0.
     @objc @IBInspectable public var value: Double = 0 {
         didSet {
             value = min(maximumValue, max(minimumValue, value))
 
-            label.text = formattedValue
+            label.text = formattedValue + " " + valueText
 
             if oldValue != value {
                 sendActions(for: .valueChanged)
