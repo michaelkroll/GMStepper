@@ -30,7 +30,7 @@ import UIKit
         didSet {
             value = min(maximumValue, max(minimumValue, value))
 
-            label.text = formattedValue + " " + valueText
+            label.text = formattedValue! + " " + valueText
 
             if oldValue != value {
                 sendActions(for: .valueChanged)
